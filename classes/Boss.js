@@ -89,7 +89,11 @@ export class Boss {
   }
 
   update(context, deltaTime) {
-    if (this.bosses.length < 1 && this.game.enemy.enemies.length < 1) {
+    if (
+      this.bosses.length < 1 &&
+      this.game.enemy.enemies.length > 15 &&
+      this.game.enemy.enemies.length < 20
+    ) {
       this.frameTimerToNextBoss += 0.1;
       // console.log("frameTimerToNextBoss", this.frameTimerToNextBoss);
 
@@ -97,7 +101,7 @@ export class Boss {
         for (let i = 0; i < this.numberOfBoss; i++) {
           this.create(new Boss(this.game));
         }
-        this.numberOfBoss += 0.5;
+        // this.numberOfBoss += 0.5;
         this.frameTimerToNextBoss = 0;
       }
     }

@@ -126,7 +126,7 @@ export class Player {
     }
 
     // Weapons
-    if (this.game.laserOn && this.energy >= 1 && !this.cooldown) {
+    if (this.game.laserOn && this.energy > 1 && !this.cooldown) {
       context.drawImage(
         this.weapons,
         this.weaponsFrameX * this.weaponsWidth,

@@ -19,6 +19,7 @@ export class Game {
 
     this.keyPressed = {};
     this.handleKeyPressed();
+    this.handleControls();
 
     this.player = new Player(this);
     this.enemy = new Enemy(this);
@@ -90,8 +91,17 @@ export class Game {
     this.context.shadowColor = "#0003";
     for (let i = 0; i < this.player.lives; i++) {
       // this.context.fillRect(20 + 16 * i, 60, 10, 20);
-      this.context.fillText(`🧡`, 16 + 22 * i, 74);
+      this.context.fillText(`🧡`, 20 + 22 * i, 78);
     }
+    this.context.restore();
+
+    // Laser text
+    this.context.save();
+    this.context.font = "18px Poppins";
+    this.context.fillStyle = "white";
+    this.context.shadowOffsetY = 2;
+    this.context.shadowColor = "#0007";
+    this.context.fillText("Laser", 20, this.height - 30);
     this.context.restore();
 
     // Laser bar
@@ -102,19 +112,10 @@ export class Game {
       ? (this.context.fillStyle = "silver")
       : this.player.energy < this.player.maxEnergy * 0.3
       ? (this.context.fillStyle = "red")
-      : (this.context.fillStyle = "gold");
+      : (this.context.fillStyle = "seagreen");
     for (let i = 0; i < this.player.energy; i++) {
-      this.context.fillRect(20 + 1 * i, this.height - 20, 1, 10);
+      this.context.fillRect(20 + 1 * i, this.height - 24, 1, 14);
     }
-    this.context.restore();
-
-    // Laser text
-    this.context.save();
-    this.context.font = "16px Poppins";
-    this.context.fillStyle = "white";
-    this.context.shadowOffsetY = 2;
-    this.context.shadowColor = "#0007";
-    this.context.fillText("Laser", 20, this.height - 25);
     this.context.restore();
 
     requestAnimationFrame(this.render);
@@ -149,9 +150,7 @@ export class Game {
     }
   }
 
-  handleKeyPressed() {
-    let lastKey = null;
-
+  handleControls() {
     this.leftBtn.onmousedown = (e) => {
       e.preventDefault();
       this.moveLeft = true;
@@ -211,6 +210,10 @@ export class Game {
       this.player.raySfx.pause();
       // console.log("onmouseup", this.laserOn);
     };
+  }
+
+  handleKeyPressed() {
+    let lastKey = null;
 
     addEventListener("keydown", ({ code }) => {
       if (lastKey === code) return;

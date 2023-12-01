@@ -5,7 +5,9 @@ export class Enemy {
     this.width = 32;
     this.height = 32;
     this.x = 32 + Math.random() * (this.game.width - this.width * 3);
-    this.y = -this.height;
+    this.y = -this.height * 0.5;
+    // this.y = 0;
+
     this.framex = 0;
     this.framey = 0;
     this.maxFrame = 9;
@@ -37,11 +39,11 @@ export class Enemy {
     this.frameTimerToNextEnemy = 0;
 
     this.explosions = [
-      "/audio/explosion/explosionCrunch_000.ogg",
+      // "/audio/explosion/explosionCrunch_000.ogg",
       // "/audio/explosion/explosionCrunch_001.ogg",
-      // "/audio/explosion/explosionCrunch_002.ogg",
+      "/audio/explosion/explosionCrunch_002.ogg",
       // "/audio/explosion/explosionCrunch_003.ogg",
-      "/audio/explosion/explosionCrunch_004.ogg",
+      // "/audio/explosion/explosionCrunch_004.ogg",
     ];
     this.explosion = new Audio(
       this.explosions[Math.floor(Math.random() * this.explosions.length)]
@@ -50,7 +52,7 @@ export class Enemy {
     this.explosion.loop = false;
   }
 
-  create(enemy) {
+  addEnemy(enemy) {
     this.enemies.push(enemy);
   }
 
@@ -95,24 +97,31 @@ export class Enemy {
   }
 
   update(context, deltaTime) {
-    if (this.enemies.length < 1) {
-      this.frameTimerToNextEnemy -= 0.1;
-      // console.log("FrameTimerToNextEnemy", this.frameTimerToNextEnemy);
+    // if (this.enemies.length < 1) {
+    //   this.frameTimerToNextEnemy -= 0.1;
+    //   // console.log("frameTimerToNextEnemy", this.frameTimerToNextEnemy);
+    // }
 
-      if (this.frameTimerToNextEnemy < 0) {
-        for (let i = 0; i < this.countEnemies; i++) {
-          this.create(new Enemy(this.game));
-        }
-        this.countEnemies += this.game.player.lives;
-        // this.countEnemies += 1 + Math.floor(Math.random() * 5);
-        this.frameTimerToNextEnemy = 4;
-      }
+    // if (this.frameTimerToNextEnemy < 0) {
+    //   for (let i = 0; i < this.countEnemies; i++) {
+    //     this.addEnemy(new Enemy(this.game));
+    //   }
+    //   this.countEnemies += this.game.player.lives * 2;
+    //   // this.countEnemies += 1 + Math.floor(Math.random() * 5);
+    //   this.frameTimerToNextEnemy = 4;
+    // }
+
+    if (this.frameTimerToNextEnemy < 0) {
+      this.addEnemy(new Enemy(this.game));
+      this.frameTimerToNextEnemy = 30;
     }
+    this.frameTimerToNextEnemy--;
 
     this.enemies = this.enemies.filter((enemy) => {
       enemy.draw(context);
       enemy.x += enemy.speed * enemy.dx;
       enemy.y += enemy.speed;
+      // enemy.y = 100;
 
       if (enemy.frameTimer > enemy.frameInterval) {
         if (enemy.energy < 1) {
@@ -145,7 +154,8 @@ export class Enemy {
           enemy.energy = 0;
           // enemy.speed = 0;
 
-          if (this.game.player.lives <= 0) {
+          if (this.game.player.lives < 1) {
+            this.game.laserOn = false;
             this.game.player.speed = 0;
           }
 

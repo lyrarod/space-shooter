@@ -32,7 +32,7 @@ export class Laser {
 
     context.save();
     context.fillStyle =
-      player.energy < player.maxEnergy * 0.3 ? "red" : "transparent";
+      player.energy < player.maxEnergy * 0.3 ? "red" : "seagreen";
     context.fillRect(
       (this.x = position.x),
       (this.y = position.y),
