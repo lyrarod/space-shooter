@@ -103,7 +103,8 @@ export class Enemy {
         for (let i = 0; i < this.countEnemies; i++) {
           this.create(new Enemy(this.game));
         }
-        this.countEnemies += 1 + Math.floor(Math.random() * 5);
+        this.countEnemies += this.game.player.lives;
+        // this.countEnemies += 1 + Math.floor(Math.random() * 5);
         this.frameTimerToNextEnemy = 4;
       }
     }
@@ -115,20 +116,48 @@ export class Enemy {
 
       if (enemy.frameTimer > enemy.frameInterval) {
         if (enemy.energy < 1) {
-          enemy.framex++;
           // console.log(enemy.framex);
+          enemy.framex++;
 
-          if (enemy.framex === 2) {
+          if (enemy.framex <= 1) {
             // Increment Score
-            this.game.score++;
+            if (!this.game.collisionDetection(enemy, this.game.player)) {
+              this.game.score++;
+            }
+
             enemy.explosion.currentTime = 0;
             enemy.explosion.play();
           }
 
           if (enemy.framex > enemy.maxFrame) {
+            if (
+              this.game.player.lives < 1 &&
+              this.game.player.framex > this.game.player.maxFrame
+            ) {
+              this.game.gameOver = true;
+            }
             return enemy.framex < enemy.maxFrame;
           }
         }
+
+        if (this.game.collisionDetection(enemy, this.game.player)) {
+          // console.log("collision");
+          enemy.energy = 0;
+          // enemy.speed = 0;
+
+          if (this.game.player.lives <= 0) {
+            this.game.player.speed = 0;
+          }
+
+          // Decrement Lives & Score
+          if (this.game.player.lives >= 1 && enemy.framex === 0) {
+            this.game.score--;
+            this.game.player.lives--;
+            // this.game.player.framex++;
+            // console.log(this.game.player.lives);
+          }
+        }
+
         enemy.frameTimer = 0;
       } else {
         enemy.frameTimer += deltaTime;
@@ -139,16 +168,8 @@ export class Enemy {
         enemy.speed += 0.25;
       }
 
-      if (
-        this.game.collisionDetection(enemy, this.game.player) &&
-        this.game.keyPressed.Enter
-      ) {
-        console.log("collide!");
-        enemy.energy = 0;
-        enemy.speed = 0;
-      }
-
-      if (enemy.y > this.game.height) this.game.score--;
+      if (enemy.y > this.game.height)
+        this.game.score -= Math.floor(enemy.energy).toFixed();
 
       return enemy.y < this.game.height;
     });

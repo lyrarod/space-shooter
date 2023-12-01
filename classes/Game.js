@@ -10,6 +10,13 @@ export class Game {
     this.width = this.canvas.width = 600;
     this.height = this.canvas.height = 800;
 
+    this.leftBtn = document.getElementById("left");
+    this.rightBtn = document.getElementById("right");
+    this.laserBtn = document.getElementById("laser");
+    this.moveLeft = false;
+    this.moveRight = false;
+    this.laserOn = false;
+
     this.keyPressed = {};
     this.handleKeyPressed();
 
@@ -33,14 +40,16 @@ export class Game {
       frameInterval: 1000 / 60,
     };
 
-    this.lives = 3;
     this.score = 0;
+    this.gameOver = false;
 
-    this.debug = false;
     this.lastTime = 0;
+    this.debug = false;
   }
 
   render = (timeStamp = 0) => {
+    if (this.gameOver) return;
+
     const deltaTime = timeStamp - this.lastTime;
     // console.log(deltaTime);
     this.lastTime = timeStamp;
@@ -52,6 +61,18 @@ export class Game {
       object.update(this.context, deltaTime);
     });
 
+    // Game Over
+    if (this.gameOver) {
+      this.context.save();
+      this.context.font = "90px Impact";
+      this.context.textAlign = "center";
+      this.context.shadowOffsetY = 6;
+      this.context.shadowColor = "#0005";
+      this.context.fillStyle = "white";
+      this.context.fillText(`GAME OVER`, this.width * 0.5, this.height * 0.5);
+      this.context.restore();
+    }
+
     // Score
     this.context.save();
     this.context.font = "30px Impact";
@@ -59,6 +80,18 @@ export class Game {
     this.context.shadowColor = "#0005";
     this.context.fillStyle = "white";
     this.context.fillText(`Score: ${this.score}`, 20, 50);
+    this.context.restore();
+
+    // Lives
+    this.context.save();
+    this.context.fillStyle = "white";
+    this.context.font = "16px sans-serif";
+    this.context.shadowOffsetY = 2;
+    this.context.shadowColor = "#0003";
+    for (let i = 0; i < this.player.lives; i++) {
+      // this.context.fillRect(20 + 16 * i, 60, 10, 20);
+      this.context.fillText(`🧡`, 16 + 22 * i, 74);
+    }
     this.context.restore();
 
     // Laser bar
@@ -119,6 +152,66 @@ export class Game {
   handleKeyPressed() {
     let lastKey = null;
 
+    this.leftBtn.onmousedown = (e) => {
+      e.preventDefault();
+      this.moveLeft = true;
+    };
+    this.leftBtn.onmouseup = () => {
+      this.moveLeft = false;
+    };
+    this.rightBtn.onmousedown = (e) => {
+      e.preventDefault();
+      this.moveRight = true;
+    };
+    this.rightBtn.onmouseup = () => {
+      this.moveRight = false;
+    };
+
+    this.leftBtn.ontouchstart = (e) => {
+      e.preventDefault();
+      this.moveLeft = true;
+    };
+    this.leftBtn.ontouchend = () => {
+      this.moveLeft = false;
+    };
+    this.rightBtn.ontouchstart = (e) => {
+      e.preventDefault();
+      this.moveRight = true;
+    };
+    this.rightBtn.ontouchend = () => {
+      this.moveRight = false;
+    };
+
+    this.laserBtn.ontouchstart = (e) => {
+      e.preventDefault();
+      if (!this.player.cooldown && !this.gameOver) {
+        this.laserOn = true;
+        this.player.raySfx.currentTime = 0;
+        this.player.raySfx.play();
+        // console.log("ontouchstart", this.laserOn);
+      }
+    };
+    this.laserBtn.ontouchend = () => {
+      this.laserOn = false;
+      this.player.raySfx.pause();
+      // console.log("ontouchend", this.laserOn);
+    };
+
+    this.laserBtn.onmousedown = (e) => {
+      e.preventDefault();
+      if (!this.player.cooldown && !this.gameOver) {
+        this.laserOn = true;
+        this.player.raySfx.currentTime = 0;
+        this.player.raySfx.play();
+        // console.log("onmousedown", this.laserOn);
+      }
+    };
+    this.laserBtn.onmouseup = () => {
+      this.laserOn = false;
+      this.player.raySfx.pause();
+      // console.log("onmouseup", this.laserOn);
+    };
+
     addEventListener("keydown", ({ code }) => {
       if (lastKey === code) return;
       lastKey = code;
@@ -127,9 +220,11 @@ export class Game {
       if (
         this.keyPressed.Enter &&
         lastKey === "Enter" &&
-        !this.player.cooldown
+        !this.player.cooldown &&
+        !this.gameOver
       ) {
         this.player.raySfx.play();
+        this.laserOn = true;
       }
 
       if (this.keyPressed.KeyR && lastKey === "KeyR") {
@@ -144,6 +239,7 @@ export class Game {
       if (!this.keyPressed.Enter && lastKey === null) {
         this.player.raySfx.currentTime = 0;
         this.player.raySfx.pause();
+        this.laserOn = false;
       }
 
       delete this.keyPressed[code];

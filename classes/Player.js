@@ -13,6 +13,10 @@ export class Player {
     this.y = this.game.height;
 
     this.speed = 5;
+    this.lives = 5;
+
+    this.framex = 0;
+    this.maxFrame = 11;
 
     this.energy = 100;
     this.maxEnergy = this.energy;
@@ -49,12 +53,12 @@ export class Player {
 
     this.laser = new Laser(this.game, this);
 
+    this.frameTimer = 0;
+    this.frameInterval = 1000 / 20;
+
     this.raySfx = new Audio("/audio/engineCircular_002.ogg");
     this.raySfx.volume = 0.1;
     this.raySfx.loop = true;
-
-    this.frameTimer = 0;
-    this.frameInterval = 1000 / 60;
   }
 
   draw(context) {
@@ -68,7 +72,7 @@ export class Player {
     }
 
     // Shield
-    if (this.game.keyPressed.Enter && this.energy > 1 && !this.cooldown) {
+    if (this.game.laserOn && this.energy > 1 && !this.cooldown) {
       context.drawImage(
         this.shield.sprite,
         this.shield.frameX * this.shield.width,
@@ -85,7 +89,7 @@ export class Player {
     // Player
     context.drawImage(
       this.player,
-      0 * this.playerWidth,
+      this.framex * this.playerWidth,
       0,
       this.playerWidth,
       this.playerheight,
@@ -107,20 +111,22 @@ export class Player {
     }
 
     // Engine
-    context.drawImage(
-      this.engine,
-      this.engineFrameX * this.engineWidth,
-      this.engineFrameY * this.engineHeight,
-      engineWidth,
-      this.engineHeight,
-      this.x - this.width * 0.5 + posX,
-      this.y - this.height * 0.4,
-      engineWidth,
-      this.engineHeight
-    );
+    if (this.lives >= 1) {
+      context.drawImage(
+        this.engine,
+        this.engineFrameX * this.engineWidth,
+        this.engineFrameY * this.engineHeight,
+        engineWidth,
+        this.engineHeight,
+        this.x - this.width * 0.5 + posX,
+        this.y - this.height * 0.4,
+        engineWidth,
+        this.engineHeight
+      );
+    }
 
     // Weapons
-    if (this.game.keyPressed.Enter && this.energy >= 1 && !this.cooldown) {
+    if (this.game.laserOn && this.energy >= 1 && !this.cooldown) {
       context.drawImage(
         this.weapons,
         this.weaponsFrameX * this.weaponsWidth,
@@ -147,13 +153,13 @@ export class Player {
       this.energy += 0.5;
     }
 
-    if (this.energy < 1) {
+    if (this.energy <= 1) {
       this.cooldown = true;
     } else if (this.energy > this.maxEnergy * 0.3) {
       this.cooldown = false;
     }
 
-    if (this.game.keyPressed.Enter) {
+    if (this.game.laserOn) {
       if (this.energy >= 1) this.energy -= 1;
       // console.log(this.cooldown);
 
@@ -171,6 +177,9 @@ export class Player {
     }
 
     if (this.frameTimer > this.frameInterval) {
+      if (this.lives < 1) {
+        this.framex++;
+      }
       this.engineFrameX++;
       this.shield.frameX++;
 
@@ -185,11 +194,14 @@ export class Player {
       this.frameTimer += deltaTime;
     }
 
-    if (this.game.keyPressed.KeyA && this.x + this.width * 0.5 > 0) {
+    if (
+      (this.game.keyPressed.KeyA || this.game.moveLeft) &&
+      this.x + this.width * 0.5 > 0
+    ) {
       this.x -= this.speed;
     }
     if (
-      this.game.keyPressed.KeyD &&
+      (this.game.keyPressed.KeyD || this.game.moveRight) &&
       this.x + this.width * 0.5 < this.game.width
     ) {
       this.x += this.speed;
