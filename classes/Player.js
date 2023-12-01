@@ -160,7 +160,7 @@ export class Player {
     }
 
     if (this.game.laserOn) {
-      if (this.energy >= 1) this.energy -= 1;
+      if (this.energy >= 0) this.energy -= 1;
       // console.log(this.cooldown);
 
       if (this.energy > 1 && !this.cooldown) {
