@@ -44,7 +44,7 @@ export class GreyBoss {
       this.explosions[Math.floor(Math.random() * this.explosions.length)]
     );
 
-    this.greyExplosion.volume = 0.4;
+    this.greyExplosion.volume = 0.2;
     this.greyExplosion.loop = false;
   }
 

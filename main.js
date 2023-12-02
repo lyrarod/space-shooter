@@ -7,7 +7,15 @@ window.addEventListener("load", () => {
 
   const game = new Game(canvas, context);
 
-  game.render();
+  const startBtn = document.getElementById("startBtn");
+  const startscreen = document.getElementById("startscreen");
+  const buttons = document.getElementById("buttons");
+
+  startBtn.onclick = () => {
+    game.render();
+    startscreen.style.display = "none";
+    buttons.style.pointerEvents = "auto";
+  };
 
   console.log(game);
 });

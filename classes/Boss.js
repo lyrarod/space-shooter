@@ -37,7 +37,7 @@ export class Boss {
     this.explosion = new Audio(
       this.explosions[Math.floor(Math.random() * this.explosions.length)]
     );
-    this.explosion.volume = 0.4;
+    this.explosion.volume = 0.2;
     this.explosion.loop = false;
   }
 

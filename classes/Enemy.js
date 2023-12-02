@@ -48,7 +48,7 @@ export class Enemy {
     this.explosion = new Audio(
       this.explosions[Math.floor(Math.random() * this.explosions.length)]
     );
-    this.explosion.volume = 0.4;
+    this.explosion.volume = 0.2;
     this.explosion.loop = false;
   }
 
@@ -97,25 +97,12 @@ export class Enemy {
   }
 
   update(context, deltaTime) {
-    // if (this.enemies.length < 1) {
-    //   this.frameTimerToNextEnemy -= 0.1;
-    //   // console.log("frameTimerToNextEnemy", this.frameTimerToNextEnemy);
-    // }
-
-    // if (this.frameTimerToNextEnemy < 0) {
-    //   for (let i = 0; i < this.countEnemies; i++) {
-    //     this.addEnemy(new Enemy(this.game));
-    //   }
-    //   this.countEnemies += this.game.player.lives * 2;
-    //   // this.countEnemies += 1 + Math.floor(Math.random() * 5);
-    //   this.frameTimerToNextEnemy = 4;
-    // }
+    this.frameTimerToNextEnemy--;
 
     if (this.frameTimerToNextEnemy < 0) {
       this.addEnemy(new Enemy(this.game));
       this.frameTimerToNextEnemy = 30;
     }
-    this.frameTimerToNextEnemy--;
 
     this.enemies = this.enemies.filter((enemy) => {
       enemy.draw(context);

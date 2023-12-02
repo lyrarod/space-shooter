@@ -7,9 +7,37 @@
   </head>
   <body>
     <main>
-      <canvas id="canvas" width="600" height="800"></canvas>
+      <div id="game">
+        <canvas id="canvas" width="600" height="800"></canvas>
 
-      <div id="controls">
+        <div id="startscreen" style="display: flex; row-gap: 2rem">
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              row-gap: 16px;
+              color: white;
+              text-shadow: 2px 2px #0007;
+            "
+          >
+            <h1 style="color: white">How to Play.🛸</h1>
+            <p>
+              <strong>PC:</strong> Press the WASD keys to move the ship, and
+              Enter to fire the laser.
+            </p>
+
+            <p>
+              <strong>MOBILE: </strong> Press the left or right button below to
+              move the ship, and the green button to fire the laser.
+            </p>
+          </div>
+
+          <button id="startBtn">Start Game !</button>
+        </div>
+      </div>
+
+      <div id="buttons">
         <button id="left">Left</button>
         <button id="right">Right</button>
         <button id="laser">Laser</button>
