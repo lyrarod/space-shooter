@@ -59,7 +59,7 @@ export class Laser {
 
     this.game.boss.bosses.forEach((boss) => {
       if (this.game.collisionDetection(this, boss) && boss.y > 0) {
-        boss.takeDamage(0.25);
+        boss.takeDamage(0.3);
       }
     });
 
@@ -71,7 +71,7 @@ export class Laser {
 
     this.game.greyBoss.greys.forEach((grey) => {
       if (this.game.collisionDetection(this, grey) && grey.y > 0) {
-        grey.takeDamage(0.25);
+        grey.takeDamage(0.3);
       }
     });
 

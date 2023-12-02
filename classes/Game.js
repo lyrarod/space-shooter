@@ -97,11 +97,11 @@ export class Game {
 
     // Laser text
     this.context.save();
-    this.context.font = "18px Poppins";
+    this.context.font = "16px sans-serif";
     this.context.fillStyle = "white";
     this.context.shadowOffsetY = 2;
     this.context.shadowColor = "#0007";
-    this.context.fillText("Laser", 20, this.height - 30);
+    this.context.fillText("LASER", 20, this.height - 30);
     this.context.restore();
 
     // Laser bar
@@ -112,7 +112,7 @@ export class Game {
       ? (this.context.fillStyle = "silver")
       : this.player.energy < this.player.maxEnergy * 0.3
       ? (this.context.fillStyle = "red")
-      : (this.context.fillStyle = "seagreen");
+      : (this.context.fillStyle = "gold");
     for (let i = 0; i < this.player.energy; i++) {
       this.context.fillRect(20 + 1 * i, this.height - 24, 1, 14);
     }

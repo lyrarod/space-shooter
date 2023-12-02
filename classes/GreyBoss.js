@@ -9,7 +9,8 @@ export class GreyBoss {
     // this.y = 0;
     this.dx = Math.random() < 0.5 ? -0.2 : 0.2;
     this.speed = 0.1 + Math.random();
-    this.energy = 20 + Math.random() * 21;
+    this.energy = 50;
+    // this.energy = 20 + Math.random() * 21;
 
     this.sprite = new Image();
     this.sprite.src = "boss.png";
@@ -53,7 +54,7 @@ export class GreyBoss {
   }
 
   takeDamage(damage) {
-    if (this.energy > 1) {
+    if (this.energy >= 1) {
       this.energy -= damage;
       this.y -= this.speed * 0.5;
     }
@@ -113,7 +114,7 @@ export class GreyBoss {
       this.frameTimerToNextGreyBoss += 0.1;
       // console.log("frameTimerToNextGreyBoss", this.frameTimerToNextGreyBoss);
 
-      if (this.frameTimerToNextGreyBoss > 30) {
+      if (this.frameTimerToNextGreyBoss > 40) {
         this.create(new GreyBoss(this.game));
         this.frameTimerToNextGreyBoss = 0;
       }

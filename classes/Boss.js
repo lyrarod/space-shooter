@@ -8,7 +8,8 @@ export class Boss {
     this.y = -this.height;
     this.dx = Math.random() < 0.5 ? -0.18 : 0.18;
     this.speed = 0.1 + Math.random();
-    this.energy = 30 + Math.random() * 21;
+    this.energy = 30;
+    // this.energy = 30 + Math.random() * 21;
     this.framex = 0;
     this.framey = 0;
     this.maxFrame = 12;
@@ -24,7 +25,7 @@ export class Boss {
 
     this.bosses = [];
 
-    this.numberOfBoss = 1;
+    this.numberOfBoss = 2;
     this.frameTimerToNextBoss = 0;
 
     this.explosions = [
@@ -46,7 +47,7 @@ export class Boss {
   }
 
   takeDamage(damage) {
-    if (this.energy > 1) {
+    if (this.energy >= 1) {
       this.energy -= damage;
       this.y -= this.speed * 0.5;
     }
@@ -101,7 +102,7 @@ export class Boss {
         for (let i = 0; i < this.numberOfBoss; i++) {
           this.create(new Boss(this.game));
         }
-        this.numberOfBoss += 0.5;
+        // this.numberOfBoss += 0.5;
         this.frameTimerToNextBoss = 0;
       }
     }
