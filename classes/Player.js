@@ -57,7 +57,7 @@ export class Player {
     this.frameInterval = 1000 / 20;
 
     this.raySfx = new Audio("/audio/engineCircular_002.ogg");
-    this.raySfx.volume = 0.1;
+    this.raySfx.volume = 0.2;
     this.raySfx.loop = true;
   }
 

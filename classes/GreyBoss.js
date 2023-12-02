@@ -111,7 +111,7 @@ export class GreyBoss {
       this.game.enemy.enemies.length < 15
     ) {
       this.frameTimerToNextGreyBoss += 0.1;
-      console.log("frameTimerToNextGreyBoss", this.frameTimerToNextGreyBoss);
+      // console.log("frameTimerToNextGreyBoss", this.frameTimerToNextGreyBoss);
 
       if (this.frameTimerToNextGreyBoss > 20) {
         this.create(new GreyBoss(this.game));

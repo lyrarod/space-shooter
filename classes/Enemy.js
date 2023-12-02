@@ -150,10 +150,6 @@ export class Enemy {
         }
 
         if (this.game.collisionDetection(enemy, this.game.player)) {
-          // console.log("collision");
-          enemy.energy = 0;
-          // enemy.speed = 0;
-
           if (this.game.player.lives < 1) {
             this.game.laserOn = false;
             this.game.player.speed = 0;
@@ -161,10 +157,9 @@ export class Enemy {
 
           // Decrement Lives & Score
           if (this.game.player.lives >= 1 && enemy.framex === 0) {
-            this.game.score--;
+            this.game.score -= Math.floor(enemy.energy).toFixed();
             this.game.player.lives--;
-            // this.game.player.framex++;
-            // console.log(this.game.player.lives);
+            enemy.energy = 0;
           }
         }
 
@@ -178,8 +173,13 @@ export class Enemy {
         enemy.speed += 0.25;
       }
 
-      if (enemy.y > this.game.height)
+      if (enemy.y > this.game.height) {
         this.game.score -= Math.floor(enemy.energy).toFixed();
+
+        if (this.game.player.lives >= 1) this.game.player.lives--;
+
+        if (this.game.player.lives < 1) this.game.gameOver = true;
+      }
 
       return enemy.y < this.game.height;
     });
