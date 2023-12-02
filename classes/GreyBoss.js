@@ -113,7 +113,7 @@ export class GreyBoss {
       this.frameTimerToNextGreyBoss += 0.1;
       // console.log("frameTimerToNextGreyBoss", this.frameTimerToNextGreyBoss);
 
-      if (this.frameTimerToNextGreyBoss > 20) {
+      if (this.frameTimerToNextGreyBoss > 30) {
         this.create(new GreyBoss(this.game));
         this.frameTimerToNextGreyBoss = 0;
       }

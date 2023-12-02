@@ -18,7 +18,7 @@ export class Boss {
 
     this.sprites = ["nautolan/boss_1.png", "nautolan/boss_2.png"];
 
-    this.sprite = new Image(this.width, this.height);
+    this.sprite = new Image();
     this.sprite.src =
       this.sprites[Math.floor(Math.random() * this.sprites.length)];
 
@@ -97,11 +97,11 @@ export class Boss {
       this.frameTimerToNextBoss += 0.1;
       // console.log("frameTimerToNextBoss", this.frameTimerToNextBoss);
 
-      if (this.frameTimerToNextBoss > 20) {
+      if (this.frameTimerToNextBoss > 30) {
         for (let i = 0; i < this.numberOfBoss; i++) {
           this.create(new Boss(this.game));
         }
-        // this.numberOfBoss += 0.5;
+        this.numberOfBoss += 0.5;
         this.frameTimerToNextBoss = 0;
       }
     }
