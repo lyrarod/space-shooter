@@ -14,6 +14,7 @@ window.addEventListener("load", () => {
 
   // game.render();
   // startscreen.style.display = "none";
+  // buttons.style.pointerEvents = "auto";
 
   startBtn.addEventListener("click", () => {
     game.render();

@@ -65,7 +65,7 @@ export class Game {
     // Game Over
     if (this.gameOver) {
       this.context.save();
-      this.context.font = "90px Impact";
+      this.context.font = "Bold 80px Sans-Serif";
       this.context.textAlign = "center";
       this.context.shadowOffsetY = 6;
       this.context.shadowColor = "#0005";
@@ -76,33 +76,31 @@ export class Game {
 
     // Score
     this.context.save();
-    this.context.font = "30px Impact";
+    this.context.font = "Bold 32px Sans-Serif";
     this.context.shadowOffsetY = 4;
     this.context.shadowColor = "#0005";
-    this.context.fillStyle = "white";
-    this.context.fillText(`Score: ${this.score}`, 20, 50);
+    this.context.fillStyle = "#fff";
+    this.context.fillText(`Score: ${this.score}`, 20, 60);
     this.context.restore();
 
     // Lives
     this.context.save();
-    this.context.fillStyle = "white";
-    this.context.font = "16px sans-serif";
+    this.context.font = "20px Sans-Serif";
     this.context.shadowOffsetY = 2;
     this.context.shadowColor = "#0003";
     for (let i = 0; i < this.player.lives; i++) {
-      // this.context.fillRect(20 + 16 * i, 60, 10, 20);
-      this.context.fillText(`🧡`, 20 + 22 * i, 78);
+      this.context.fillText(`👽`, 20 + 30 * i, 90);
     }
     this.context.restore();
 
     // Laser text
-    this.context.save();
-    this.context.font = "16px sans-serif";
-    this.context.fillStyle = "white";
-    this.context.shadowOffsetY = 2;
-    this.context.shadowColor = "#0007";
-    this.context.fillText("LASER", 20, this.height - 30);
-    this.context.restore();
+    // this.context.save();
+    // this.context.font = "2rem Poppins";
+    // this.context.fillStyle = "white";
+    // this.context.shadowOffsetY = 2;
+    // this.context.shadowColor = "#0007";
+    // this.context.fillText("Laser", 20, this.height - 40);
+    // this.context.restore();
 
     // Laser bar
     this.context.save();
@@ -114,7 +112,7 @@ export class Game {
       ? (this.context.fillStyle = "red")
       : (this.context.fillStyle = "gold");
     for (let i = 0; i < this.player.energy; i++) {
-      this.context.fillRect(20 + 1 * i, this.height - 24, 1, 14);
+      this.context.fillRect(20 + 1.1 * i, this.height - 30, 1, 15);
     }
     this.context.restore();
 
