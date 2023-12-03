@@ -65,7 +65,7 @@ export class Game {
     // Game Over
     if (this.gameOver) {
       this.context.save();
-      this.context.font = "Bold 80px Sans-Serif";
+      this.context.font = "900 80px Sans-Serif";
       this.context.textAlign = "center";
       this.context.shadowOffsetY = 6;
       this.context.shadowColor = "#0005";
@@ -76,11 +76,11 @@ export class Game {
 
     // Score
     this.context.save();
-    this.context.font = "Bold 32px Sans-Serif";
+    this.context.font = "900 32px Sans-Serif";
     this.context.shadowOffsetY = 4;
     this.context.shadowColor = "#0005";
     this.context.fillStyle = "#fff";
-    this.context.fillText(`Score: ${this.score}`, 20, 60);
+    this.context.fillText(`SCORE: ${this.score}`, 20, 60);
     this.context.restore();
 
     // Lives
@@ -112,7 +112,7 @@ export class Game {
       ? (this.context.fillStyle = "red")
       : (this.context.fillStyle = "gold");
     for (let i = 0; i < this.player.energy; i++) {
-      this.context.fillRect(20 + 1.1 * i, this.height - 30, 1, 15);
+      this.context.fillRect(20 + 1.2 * i, this.height - 30, 1, 15);
     }
     this.context.restore();
 
