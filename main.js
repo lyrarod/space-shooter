@@ -8,17 +8,23 @@ window.addEventListener("load", () => {
   const game = new Game(canvas, context);
   console.log(game);
 
-  const startBtn = document.getElementById("startBtn");
+  const startGameBtn = document.getElementById("startGameBtn");
   const startscreen = document.getElementById("startscreen");
   const buttons = document.getElementById("buttons");
+  const playAgainBtn = document.getElementById("playAgainBtn");
 
-  // game.render();
-  // startscreen.style.display = "none";
-  // buttons.style.pointerEvents = "auto";
-
-  startBtn.addEventListener("click", () => {
+  startGameBtn.addEventListener("click", () => {
     game.render();
     startscreen.style.display = "none";
     buttons.style.pointerEvents = "auto";
   });
+
+  playAgainBtn.addEventListener("click", () => {
+    game.playAgain();
+    playAgainBtn.style.display = "none";
+  });
+
+  // game.render();
+  // startscreen.style.display = "none";
+  // buttons.style.pointerEvents = "auto";
 });

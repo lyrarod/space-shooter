@@ -49,6 +49,10 @@ export class GreyBoss {
     this.greyExplosion.loop = false;
   }
 
+  restart() {
+    this.greys = [];
+  }
+
   create(boss) {
     this.greys.push(boss);
   }
@@ -91,18 +95,18 @@ export class GreyBoss {
       ctx.restore();
     }
 
-    if (this.energy > 1) {
-      ctx.save();
-      ctx.fillStyle = "white";
-      ctx.textAlign = "center";
-      ctx.font = "14px sans-serif";
-      ctx.fillText(
-        Math.floor(this.energy),
-        this.x + this.width * 0.5,
-        this.y + this.height - 8
-      );
-      ctx.restore();
-    }
+    // if (this.energy > 1) {
+    //   ctx.save();
+    //   ctx.fillStyle = "white";
+    //   ctx.textAlign = "center";
+    //   ctx.font = "14px sans-serif";
+    //   ctx.fillText(
+    //     Math.floor(this.energy),
+    //     this.x + this.width * 0.5,
+    //     this.y + this.height - 8
+    //   );
+    //   ctx.restore();
+    // }
   }
 
   update(ctx, dt) {

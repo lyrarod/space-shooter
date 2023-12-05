@@ -61,6 +61,15 @@ export class Player {
     this.raySfx.loop = true;
   }
 
+  restart() {
+    this.speed = 5;
+    this.lives = 5;
+    this.framex = 0;
+    this.energy = 100;
+    this.x = this.game.width * 0.5 - this.width * 0.5;
+    this.y = this.game.height;
+  }
+
   draw(context) {
     context.save();
 
@@ -140,10 +149,11 @@ export class Player {
       );
     }
 
-    if (this.y + this.playerheight - this.height * 0.5 > this.game.height) {
-      this.y -= 2;
-    }
     context.restore();
+
+    if (this.y + this.playerheight - this.height * 0.5 > this.game.height) {
+      this.y -= 1;
+    }
   }
 
   update(context, deltaTime) {

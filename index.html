@@ -17,24 +17,47 @@
               flex-direction: column;
               justify-content: center;
               row-gap: 16px;
-              color: white;
-              text-shadow: 2px 2px #0007;
+              color: #ddd;
+              text-shadow: 0 1px #0007;
             "
           >
             <h1 style="color: white">How to Play 🛸</h1>
             <p>
-              <strong>PC:</strong> Press the WASD keys to move the ship, and
-              Enter to fire the laser.
+              <strong style="color: white">PC:</strong> Press the WASD keys to
+              move the ship, and Enter to fire the laser.
             </p>
 
             <p>
-              <strong>MOBILE: </strong> Press the left or right button below to
-              move the ship, and the green button to fire the laser.
+              <strong style="color: white">MOBILE: </strong> Press the left or
+              right button below to move the ship, and the green button to fire
+              the laser.
             </p>
           </div>
 
-          <button id="startBtn">Start Game !</button>
+          <button id="startGameBtn">Start Game !</button>
         </div>
+
+        <button
+          id="playAgainBtn"
+          style="
+            position: absolute;
+            left: 50%;
+            top: 60%;
+            transform: translateX(-50%);
+            width: 80%;
+            font-size: 2rem;
+            display: none;
+            color: white;
+            background-color: transparent;
+            backdrop-filter: blur(4px);
+            border: 1px solid white;
+            text-transform: capitalize;
+            border-radius: 8px;
+            cursor: pointer;
+          "
+        >
+          Play Again!
+        </button>
       </div>
 
       <div id="buttons" style="pointer-events: none">

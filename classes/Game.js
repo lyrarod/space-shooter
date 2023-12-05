@@ -48,8 +48,22 @@ export class Game {
     this.debug = false;
   }
 
+  playAgain() {
+    this.gameOver = false;
+    this.score = 0;
+    this.player.restart();
+    this.enemy.restart();
+    this.boss.restart();
+    this.greyBoss.restart();
+    this.render();
+  }
+
   render = (timeStamp = 0) => {
-    if (this.gameOver) return;
+    if (this.gameOver) {
+      this.player.raySfx.pause();
+      playAgainBtn.style.display = "block";
+      return;
+    }
 
     const deltaTime = timeStamp - this.lastTime;
     // console.log(deltaTime);
@@ -93,15 +107,6 @@ export class Game {
     }
     this.context.restore();
 
-    // Laser text
-    // this.context.save();
-    // this.context.font = "2rem Poppins";
-    // this.context.fillStyle = "white";
-    // this.context.shadowOffsetY = 2;
-    // this.context.shadowColor = "#0007";
-    // this.context.fillText("Laser", 20, this.height - 40);
-    // this.context.restore();
-
     // Laser bar
     this.context.save();
     this.context.shadowOffsetY = 2;
@@ -112,7 +117,7 @@ export class Game {
       ? (this.context.fillStyle = "red")
       : (this.context.fillStyle = "gold");
     for (let i = 0; i < this.player.energy; i++) {
-      this.context.fillRect(20 + 1.2 * i, this.height - 30, 1, 15);
+      this.context.fillRect(20 + 1 * i, this.height - 30, 1, 15);
     }
     this.context.restore();
 

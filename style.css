@@ -37,17 +37,17 @@ main {
   backdrop-filter: blur(4px);
   padding-inline: 2rem;
 }
-#startBtn {
+#startGameBtn {
   width: 100%;
   font-size: 1.5rem;
   color: white;
-  background: #fff0;
-  backdrop-filter: blur(10px);
-  border: 2px solid white;
+  background-color: transparent;
+  border: 1px solid white;
   border-radius: 8px;
+  backdrop-filter: blur(4px);
   box-shadow: 0 0 12px 1px #0009;
 }
-#startBtn:hover {
+#startGameBtn:hover {
   cursor: pointer;
 }
 
@@ -55,7 +55,7 @@ main {
   display: flex;
   height: 100%;
   max-width: 100%;
-  /* box-shadow: 0 2px 2px 2px #0002; */
+  box-shadow: 0 2px 2px 1px #0002;
 }
 
 #buttons {
@@ -74,7 +74,7 @@ button {
   font-weight: 700;
   letter-spacing: 2px;
   background: rebeccapurple;
-  border: 1px solid #fff2;
+  border: 1px solid #fff3;
   color: #fff;
   box-shadow: 0 3px 2px 1px #0002;
 }
@@ -82,8 +82,12 @@ button {
   background: seagreen;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 769px) {
   #buttons {
     display: none;
+  }
+
+  #startscreen {
+    padding-inline: 4rem;
   }
 }

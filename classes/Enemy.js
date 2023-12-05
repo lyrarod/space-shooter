@@ -52,6 +52,10 @@ export class Enemy {
     this.explosion.loop = false;
   }
 
+  restart() {
+    this.enemies = [];
+  }
+
   addEnemy(enemy) {
     this.enemies.push(enemy);
   }
@@ -83,16 +87,16 @@ export class Enemy {
       this.height * 2
     );
 
-    if (this.energy > 1) {
-      context.fillStyle = "white";
-      context.textAlign = "center";
-      context.font = "14px sans-serif";
-      context.fillText(
-        Math.floor(this.energy),
-        this.x + this.width * 0.5,
-        this.y + this.height + 10
-      );
-    }
+    // if (this.energy > 1) {
+    //   context.fillStyle = "white";
+    //   context.textAlign = "center";
+    //   context.font = "14px sans-serif";
+    //   context.fillText(
+    //     Math.floor(this.energy),
+    //     this.x + this.width * 0.5,
+    //     this.y + this.height + 10
+    //   );
+    // }
     context.restore();
   }
 
