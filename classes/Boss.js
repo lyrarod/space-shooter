@@ -3,7 +3,7 @@ export class Boss {
     this.game = game;
 
     this.width = 64;
-    this.height = 64;
+    this.height = 74;
     this.x = Math.random() * (this.game.width - this.width);
     this.y = -this.height;
     this.dx = Math.random() < 0.5 ? -0.18 : 0.18;
@@ -76,19 +76,18 @@ export class Boss {
       this.height * 2
     );
 
-    // if (this.energy > 1) {
-    //   context.save();
-    //   context.fillStyle = "white";
-    //   context.textAlign = "center";
-    //   context.font = "14px sans-serif";
-    //   context.fillText(
-    //     Math.floor(this.energy),
-    //     this.x + this.width * 0.5,
-    //     this.y + this.height + 30
-    //     // this.y - 20
-    //   );
-    //   context.restore();
-    // }
+    if (this.game.debug && this.energy > 1) {
+      context.save();
+      context.fillStyle = "white";
+      context.textAlign = "center";
+      context.font = "14px sans-serif";
+      context.fillText(
+        Math.floor(this.energy),
+        this.x + this.width * 0.5,
+        this.y + this.height + 12
+      );
+      context.restore();
+    }
 
     context.restore();
   }
@@ -96,13 +95,14 @@ export class Boss {
   update(context, deltaTime) {
     if (
       this.bosses.length < 1 &&
-      this.game.enemy.enemies.length > 15 &&
-      this.game.enemy.enemies.length < 20
+      this.game.greyBoss.greys.length < 1 &&
+      this.game.enemy.enemies.length >= 10 &&
+      this.game.enemy.enemies.length <= 20
     ) {
       this.frameTimerToNextBoss += 0.1;
-      // console.log("frameTimerToNextBoss", this.frameTimerToNextBoss);
+      // console.log("NextBoss", this.frameTimerToNextBoss);
 
-      if (this.frameTimerToNextBoss > 50) {
+      if (this.frameTimerToNextBoss > 100) {
         this.numberOfBoss = Math.random() < 0.5 ? 1 : 2;
         // console.log("numberOfBoss", this.numberOfBoss);
 

@@ -87,25 +87,26 @@ export class Enemy {
       this.height * 2
     );
 
-    // if (this.energy > 1) {
-    //   context.fillStyle = "white";
-    //   context.textAlign = "center";
-    //   context.font = "14px sans-serif";
-    //   context.fillText(
-    //     Math.floor(this.energy),
-    //     this.x + this.width * 0.5,
-    //     this.y + this.height + 10
-    //   );
-    // }
+    if (this.game.debug && this.energy > 1) {
+      context.fillStyle = "white";
+      context.textAlign = "center";
+      context.font = "14px sans-serif";
+      context.fillText(
+        Math.floor(this.energy),
+        this.x + this.width * 0.5,
+        this.y + this.height + 10
+      );
+    }
     context.restore();
   }
 
   update(context, deltaTime) {
-    this.frameTimerToNextEnemy--;
+    this.frameTimerToNextEnemy++;
+    // console.log("NextEnemy", this.frameTimerToNextEnemy);
 
-    if (this.frameTimerToNextEnemy < 0) {
+    if (this.frameTimerToNextEnemy % 30 === 0) {
       this.addEnemy(new Enemy(this.game));
-      this.frameTimerToNextEnemy = 30;
+      this.frameTimerToNextEnemy = 0;
     }
 
     this.enemies = this.enemies.filter((enemy) => {

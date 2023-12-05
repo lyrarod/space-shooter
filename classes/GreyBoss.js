@@ -95,30 +95,31 @@ export class GreyBoss {
       ctx.restore();
     }
 
-    // if (this.energy > 1) {
-    //   ctx.save();
-    //   ctx.fillStyle = "white";
-    //   ctx.textAlign = "center";
-    //   ctx.font = "14px sans-serif";
-    //   ctx.fillText(
-    //     Math.floor(this.energy),
-    //     this.x + this.width * 0.5,
-    //     this.y + this.height - 8
-    //   );
-    //   ctx.restore();
-    // }
+    if (this.game.debug && this.energy > 1) {
+      ctx.save();
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.font = "14px sans-serif";
+      ctx.fillText(
+        Math.floor(this.energy),
+        this.x + this.width * 0.5,
+        this.y + this.height - 8
+      );
+      ctx.restore();
+    }
   }
 
   update(ctx, dt) {
     if (
       this.greys.length < 1 &&
-      this.game.enemy.enemies.length > 10 &&
-      this.game.enemy.enemies.length < 15
+      this.game.boss.bosses < 1 &&
+      this.game.enemy.enemies.length >= 10 &&
+      this.game.enemy.enemies.length <= 20
     ) {
       this.frameTimerToNextGreyBoss += 0.1;
-      // console.log("frameTimerToNextGreyBoss", this.frameTimerToNextGreyBoss);
+      // console.log("NextGreyBoss", this.frameTimerToNextGreyBoss);
 
-      if (this.frameTimerToNextGreyBoss > 40) {
+      if (this.frameTimerToNextGreyBoss > 50) {
         this.create(new GreyBoss(this.game));
         this.frameTimerToNextGreyBoss = 0;
       }
@@ -141,22 +142,51 @@ export class GreyBoss {
           grey.exp.isActive = true;
           // console.log(grey.exp.framex++);
 
-          if (grey.exp.framex <= 2) {
-            this.game.score += 2;
+          if (grey.exp.framex <= 1) {
+            if (!this.game.collisionDetection(grey, this.game.player)) {
+              this.game.score += this.energy;
+            }
             grey.greyExplosion.currentTime = 0;
             grey.greyExplosion.play();
           }
 
           if (grey.exp.framex > grey.exp.maxframe) {
+            if (
+              this.game.player.lives < 1 &&
+              this.game.player.framex > this.game.player.maxFrame
+            ) {
+              this.game.gameOver = true;
+            }
             return grey.exp.framex < grey.exp.maxframe;
           }
         }
+
+        if (this.game.collisionDetection(grey, this.game.player)) {
+          if (this.game.player.lives < 1) {
+            this.game.laserOn = false;
+            this.game.player.speed = 0;
+          }
+
+          // Decrement Lives & Score
+          if (this.game.player.lives >= 1 && grey.exp.framex === 0) {
+            this.game.score -= Math.floor(grey.energy).toFixed();
+            this.game.player.lives--;
+            grey.energy = 0;
+          }
+        }
+
         grey.exp.frameTimer = 0;
       } else {
         grey.exp.frameTimer += dt;
       }
 
-      if (grey.y > this.game.height) this.game.score -= 2;
+      if (grey.y > this.game.height) {
+        this.game.score -= Math.floor(grey.energy).toFixed();
+
+        if (this.game.player.lives >= 1) this.game.player.lives--;
+
+        if (this.game.player.lives < 1) this.game.gameOver = true;
+      }
 
       return grey.y < this.game.height;
     });

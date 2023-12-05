@@ -6,7 +6,6 @@ window.addEventListener("load", () => {
   const context = canvas.getContext("2d");
 
   const game = new Game(canvas, context);
-  console.log(game);
 
   const startGameBtn = document.getElementById("startGameBtn");
   const startscreen = document.getElementById("startscreen");
@@ -23,8 +22,4 @@ window.addEventListener("load", () => {
     game.playAgain();
     playAgainBtn.style.display = "none";
   });
-
-  // game.render();
-  // startscreen.style.display = "none";
-  // buttons.style.pointerEvents = "auto";
 });
