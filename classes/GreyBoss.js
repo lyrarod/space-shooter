@@ -8,7 +8,7 @@ export class GreyBoss {
     this.y = -this.height * 0.5;
     // this.y = 0;
     this.dx = Math.random() < 0.5 ? -0.2 : 0.2;
-    this.speed = 0.1 + Math.random();
+    this.speed = 0.2 + Math.random();
     this.energy = 50;
     // this.energy = 20 + Math.random() * 21;
 

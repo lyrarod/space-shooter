@@ -17,7 +17,7 @@ export class Enemy {
     this.frameInterval = 90;
 
     this.dx = Math.random() < 0.33 ? 0.2 : Math.random() < 0.66 ? -0.2 : 0;
-    this.speed = 0.25 + Math.random();
+    this.speed = 0.5 + Math.random();
     this.energy = 1 + Math.random() * 10;
 
     this.sprites = [
@@ -162,7 +162,7 @@ export class Enemy {
         enemy.speed += 0.25;
       }
 
-      if (enemy.y > this.game.height) {
+      if (enemy.y > this.game.height && enemy.energy > 1) {
         this.game.score -= Math.floor(enemy.energy).toFixed();
 
         if (this.game.player.lives >= 1) this.game.player.lives--;

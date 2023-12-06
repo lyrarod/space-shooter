@@ -6,8 +6,8 @@ export class Boss {
     this.height = 74;
     this.x = Math.random() * (this.game.width - this.width);
     this.y = -this.height;
-    this.dx = Math.random() < 0.5 ? -0.18 : 0.18;
-    this.speed = 0.1 + Math.random();
+    this.dx = Math.random() < 0.5 ? -0.2 : 0.2;
+    this.speed = 0.2 + Math.random();
     this.energy = 30;
     this.framex = 0;
     this.framey = 0;
@@ -120,20 +120,42 @@ export class Boss {
 
       if (boss.frameTimer > boss.frameInterval) {
         if (boss.energy < 1) {
-          boss.framex++;
           // console.log(boss.framex);
+          boss.framex++;
 
-          if (boss.framex === 5) {
-            // console.log("explosion!");
-            this.game.score += 3;
+          if (boss.framex <= 1) {
+            if (!this.game.collisionDetection(boss, this.game.player)) {
+              this.game.score += this.energy;
+            }
             boss.explosion.currentTime = 0;
             boss.explosion.play();
           }
 
           if (boss.framex > boss.maxFrame) {
-            return boss.framex < boss.maxFrame || boss.energy > 1;
+            if (
+              this.game.player.lives < 1 &&
+              this.game.player.framex > this.game.player.maxFrame
+            ) {
+              this.game.gameOver = true;
+            }
+            return boss.framex < boss.maxFrame;
           }
         }
+
+        if (this.game.collisionDetection(boss, this.game.player)) {
+          if (this.game.player.lives < 1) {
+            this.game.laserOn = false;
+            this.game.player.speed = 0;
+          }
+
+          // Decrement Lives & Score
+          if (this.game.player.lives >= 1 && boss.framex <= 0) {
+            this.game.score -= this.energy;
+            this.game.player.lives--;
+            boss.energy = 0;
+          }
+        }
+
         boss.frameTimer = 0;
       } else {
         boss.frameTimer += deltaTime;
@@ -144,7 +166,13 @@ export class Boss {
         // boss.speed += 0.2;
       }
 
-      if (boss.y > this.game.height) this.game.score -= 3;
+      if (boss.y > this.game.height) {
+        this.game.score -= this.energy;
+
+        if (this.game.player.lives >= 1) this.game.player.lives--;
+
+        if (this.game.player.lives < 1) this.game.gameOver = true;
+      }
 
       return boss.y < this.game.height;
     });

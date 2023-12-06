@@ -94,16 +94,16 @@ export class Game {
     this.context.shadowOffsetY = 4;
     this.context.shadowColor = "#0005";
     this.context.fillStyle = "#fff";
-    this.context.fillText(`SCORE: ${this.score}`, 20, 60);
+    this.context.fillText(`SCORE ${this.score}`, 20, 60);
     this.context.restore();
 
     // Lives
     this.context.save();
-    this.context.font = "20px Sans-Serif";
-    this.context.shadowOffsetY = 2;
-    this.context.shadowColor = "#0003";
+    this.context.font = "16px Sans-Serif";
+    this.context.shadowOffsetY = 4;
+    this.context.shadowColor = "#0007";
     for (let i = 0; i < this.player.lives; i++) {
-      this.context.fillText(`👽`, 20 + 30 * i, 90);
+      this.context.fillText(`❤️`, 20 + 26 * i, this.height - 45);
     }
     this.context.restore();
 
@@ -117,7 +117,7 @@ export class Game {
       ? (this.context.fillStyle = "red")
       : (this.context.fillStyle = "gold");
     for (let i = 0; i < this.player.energy; i++) {
-      this.context.fillRect(20 + 1 * i, this.height - 30, 1, 15);
+      this.context.fillRect(20 + 1.25 * i, this.height - 30, 1, 10);
     }
     this.context.restore();
 
