@@ -43,6 +43,7 @@ export class Boss {
 
   restart() {
     this.bosses = [];
+    this.frameTimerToNextBoss = 0;
   }
 
   create(boss) {
@@ -100,7 +101,7 @@ export class Boss {
       this.game.enemy.enemies.length <= 20
     ) {
       this.frameTimerToNextBoss += 0.1;
-      // console.log("NextBoss", this.frameTimerToNextBoss);
+      // console.log("frameTimerToNextBoss", this.frameTimerToNextBoss);
 
       if (this.frameTimerToNextBoss > 100) {
         this.numberOfBoss = Math.random() < 0.5 ? 1 : 2;

@@ -8,14 +8,16 @@ window.addEventListener("load", () => {
   const game = new Game(canvas, context);
 
   const startGameBtn = document.getElementById("startGameBtn");
-  const startscreen = document.getElementById("startscreen");
-  const buttons = document.getElementById("buttons");
   const playAgainBtn = document.getElementById("playAgainBtn");
 
   startGameBtn.addEventListener("click", () => {
-    game.render();
+    const buttons = document.getElementById("buttons");
+    const startscreen = document.getElementById("startscreen");
+
     startscreen.style.display = "none";
     buttons.style.pointerEvents = "auto";
+
+    game.render();
   });
 
   playAgainBtn.addEventListener("click", () => {

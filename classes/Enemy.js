@@ -33,7 +33,6 @@ export class Enemy {
     this.sprite.src =
       this.sprites[Math.floor(Math.random() * this.sprites.length)];
 
-    this.countEnemies = 0;
     this.frameTimerToNextEnemy = 0;
 
     this.explosions = [
@@ -52,6 +51,7 @@ export class Enemy {
 
   restart() {
     this.enemies = [];
+    this.frameTimerToNextEnemy = 0;
   }
 
   addEnemy(enemy) {
@@ -100,7 +100,7 @@ export class Enemy {
 
   update(context, deltaTime) {
     this.frameTimerToNextEnemy++;
-    // console.log("NextEnemy", this.frameTimerToNextEnemy);
+    // console.log("frameTimerToNextEnemy", this.frameTimerToNextEnemy);
 
     if (this.frameTimerToNextEnemy % 30 === 0) {
       this.addEnemy(new Enemy(this.game));

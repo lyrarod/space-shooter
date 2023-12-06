@@ -49,25 +49,41 @@ export class Game {
   }
 
   playAgain() {
-    this.gameOver = false;
-    this.score = 0;
-    this.player.restart();
-    this.enemy.restart();
-    this.boss.restart();
-    this.greyBoss.restart();
-    this.render();
+    if (this.gameOver) {
+      this.gameOver = false;
+      this.lastTime = 0;
+      this.score = 0;
+
+      this.player.restart();
+      this.enemy.restart();
+      this.boss.restart();
+      this.greyBoss.restart();
+
+      this.background = {
+        x: 0,
+        y: 0,
+        width: 800,
+        height: 800,
+        img: new Image(),
+        speed: 1,
+        frameTimer: 0,
+        frameInterval: 1000 / 60,
+      };
+
+      this.render();
+    }
   }
 
-  render = (timeStamp = 0) => {
+  render = (timestamp = 0) => {
+    let deltaTime = timestamp - this.lastTime;
+    // console.log("deltaTime:", Math.floor(deltaTime));
+    this.lastTime = timestamp;
+
     if (this.gameOver) {
       this.player.raySfx.pause();
       playAgainBtn.style.display = "block";
       return;
     }
-
-    const deltaTime = timeStamp - this.lastTime;
-    // console.log(deltaTime);
-    this.lastTime = timeStamp;
 
     this.context.clearRect(0, 0, this.width, this.height);
     this.backgroundRender(deltaTime);
@@ -81,6 +97,7 @@ export class Game {
       this.context.save();
       this.context.font = "900 80px Sans-Serif";
       this.context.textAlign = "center";
+      this.context.textBaseline = "middle";
       this.context.shadowOffsetY = 6;
       this.context.shadowColor = "#0005";
       this.context.fillStyle = "white";
@@ -100,7 +117,7 @@ export class Game {
     // Lives
     this.context.save();
     this.context.font = "16px Sans-Serif";
-    this.context.shadowOffsetY = 4;
+    this.context.shadowOffsetY = 2;
     this.context.shadowColor = "#0007";
     for (let i = 0; i < this.player.lives; i++) {
       this.context.fillText(`❤️`, 20 + 26 * i, this.height - 45);
@@ -190,13 +207,11 @@ export class Game {
         this.laserOn = true;
         this.player.raySfx.currentTime = 0;
         this.player.raySfx.play();
-        // console.log("ontouchstart", this.laserOn);
       }
     };
     this.laserBtn.ontouchend = () => {
       this.laserOn = false;
       this.player.raySfx.pause();
-      // console.log("ontouchend", this.laserOn);
     };
 
     this.laserBtn.onmousedown = (e) => {
@@ -205,13 +220,11 @@ export class Game {
         this.laserOn = true;
         this.player.raySfx.currentTime = 0;
         this.player.raySfx.play();
-        // console.log("onmousedown", this.laserOn);
       }
     };
     this.laserBtn.onmouseup = () => {
       this.laserOn = false;
       this.player.raySfx.pause();
-      // console.log("onmouseup", this.laserOn);
     };
   }
 
