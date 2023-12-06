@@ -6,7 +6,6 @@ export class Enemy {
     this.height = 32;
     this.x = 32 + Math.random() * (this.game.width - this.width * 3);
     this.y = -this.height * 0.5;
-    // this.y = 0;
 
     this.framex = 0;
     this.framey = 0;
@@ -17,9 +16,8 @@ export class Enemy {
     this.frameTimer = 0;
     this.frameInterval = 90;
 
-    this.dx = Math.random() < 0.33 ? 0.5 : Math.random() < 0.66 ? -0.5 : 0;
-    this.speed = 0.1 + Math.random();
-    this.color = "red";
+    this.dx = Math.random() < 0.33 ? 0.2 : Math.random() < 0.66 ? -0.2 : 0;
+    this.speed = 0.25 + Math.random();
     this.energy = 1 + Math.random() * 10;
 
     this.sprites = [
@@ -43,7 +41,7 @@ export class Enemy {
       // "/audio/explosion/explosionCrunch_001.ogg",
       "/audio/explosion/explosionCrunch_002.ogg",
       // "/audio/explosion/explosionCrunch_003.ogg",
-      // "/audio/explosion/explosionCrunch_004.ogg",
+      "/audio/explosion/explosionCrunch_004.ogg",
     ];
     this.explosion = new Audio(
       this.explosions[Math.floor(Math.random() * this.explosions.length)]
@@ -70,7 +68,7 @@ export class Enemy {
   draw(context) {
     context.save();
     if (this.game.debug && this.energy > 1) {
-      context.strokeStyle = this.color;
+      context.strokeStyle = "red";
       context.lineWidth = 1;
       context.strokeRect(this.x, this.y, this.width, this.height);
     }
@@ -113,7 +111,6 @@ export class Enemy {
       enemy.draw(context);
       enemy.x += enemy.speed * enemy.dx;
       enemy.y += enemy.speed;
-      // enemy.y = 100;
 
       if (enemy.frameTimer > enemy.frameInterval) {
         if (enemy.energy < 1) {

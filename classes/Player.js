@@ -74,7 +74,7 @@ export class Player {
     context.save();
 
     // HitBox
-    if (this.game.debug) {
+    if (this.game.debug && this.lives > 1) {
       context.strokeStyle = "seagreen";
       context.lineWidth = 2;
       context.strokeRect(this.x, this.y, this.width, this.height);
