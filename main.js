@@ -10,18 +10,6 @@ window.addEventListener("load", () => {
   const startGameBtn = document.getElementById("startGameBtn");
   const playAgainBtn = document.getElementById("playAgainBtn");
 
-  startGameBtn.addEventListener("click", () => {
-    const buttons = document.getElementById("buttons");
-    const startscreen = document.getElementById("startscreen");
-
-    startscreen.style.display = "none";
-    buttons.style.pointerEvents = "auto";
-
-    game.render();
-  });
-
-  playAgainBtn.addEventListener("click", () => {
-    game.playAgain();
-    playAgainBtn.style.display = "none";
-  });
+  startGameBtn.addEventListener("click", () => game.start());
+  playAgainBtn.addEventListener("click", () => game.playAgain());
 });

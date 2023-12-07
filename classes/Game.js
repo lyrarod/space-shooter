@@ -46,6 +46,22 @@ export class Game {
 
     this.lastTime = 0;
     this.debug = false;
+
+    this.music = new Audio("/audio/music.ogg");
+    this.music.loop = true;
+    this.music.volume = 0.3;
+
+    this.buttons = document.getElementById("buttons");
+    this.startScreen = document.getElementById("startScreen");
+  }
+
+  start() {
+    if (!this.gameOver) {
+      this.render();
+      this.music.play();
+      this.startScreen.style.display = "none";
+      this.buttons.style.pointerEvents = "auto";
+    }
   }
 
   playAgain() {
@@ -70,6 +86,11 @@ export class Game {
         frameInterval: 1000 / 60,
       };
 
+      this.music.currentTime = 0;
+      this.music.play();
+
+      playAgainBtn.style.display = "none";
+
       this.render();
     }
   }
@@ -80,6 +101,7 @@ export class Game {
     this.lastTime = timestamp;
 
     if (this.gameOver) {
+      this.music.pause();
       this.player.raySfx.pause();
       playAgainBtn.style.display = "block";
       return;
