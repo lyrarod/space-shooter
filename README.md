@@ -1,6 +1,6 @@
 # Space Shooter Javascript 2D Game 🛸
 ## 🔗 Play Online
-NETLIFY: [https://space-shooter-lyrarod.netlify.app](https://space-shooter-lyrarod.netlify.app) <br><br>
+NETLIFY: [https://space-shooter-lyrarod.netlify.app](https://space-shooter-lyrarod.netlify.app)<br>
 VERCEL: [https://space-shooter-lyrarod.vercel.app](https://space-shooter-lyrarod.vercel.app)
 
 
