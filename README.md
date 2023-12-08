@@ -9,13 +9,13 @@
 Clone o projeto
 
 ```bash
-  git clone https://link-para-o-projeto
+  git clone https://github.com/lyrarod/space-shooter.git
 ```
 
 Entre no diretório do projeto
 
 ```bash
-  cd my-project
+  cd space-shooter
 ```
 
 Instale as dependências
